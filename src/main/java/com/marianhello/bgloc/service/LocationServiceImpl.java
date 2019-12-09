@@ -713,6 +713,10 @@ public class LocationServiceImpl extends Service implements ProviderDelegate, Lo
             boolean hasConnectivity = isNetworkAvailable();
             mPostLocationTask.setHasConnectivity(hasConnectivity);
             logger.info("Network condition changed has connectivity: {}", hasConnectivity);
+            if (hasConnectivity) {
+                logger.info("Uploading offline locations");
+                SyncService.sync(mSyncAccount, mResolver.getAuthority(), true);
+            }
         }
     };
 
